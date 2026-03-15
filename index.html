@@ -28,11 +28,8 @@
         input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #222; background: #000; color: #fff; font-size: 16px; }
         .divider { border-top: 1px solid #222; margin: 100px 10%; }
         .review-section { padding: 0 20px 100px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .review-section h3 { font-size: 36px; margin-bottom: 10px; }
-        .review-section p { color: #888; margin-bottom: 30px; }
         .review-card { background: #111; padding: 30px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid #222; }
         .submit-btn { background: #fff; color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        .submit-btn:hover { background: #ddd; transform: translateY(-2px); }
         #paypal-button-container { margin-top: 15px; }
     </style>
 </head>
@@ -62,7 +59,7 @@
             <p style="color:#555; font-size:12px; margin-bottom:20px;">Unit Price (Excl. Fees)</p>
             
             <input type="text" id="orderName" placeholder="Full Name">
-            <input type="text" id="orderAddress" placeholder="Shipping Address">
+            <input type="text" id="orderAddress" placeholder="Delivery Address (UAE Only)">
             
             <label style="display:block; text-align:left; font-size:12px; color:#888; margin-bottom:5px;">Select Quantity</label>
             <select id="orderQty" onchange="updateTotal()">
@@ -84,7 +81,6 @@
 
     <div class="review-section">
         <h3>Share Your Experience</h3>
-        <p>We value your feedback on Lumina.</p>
         <div class="review-card">
             <input type="text" id="revName" placeholder="Your Name">
             <select id="revRating">
@@ -110,15 +106,26 @@
         style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
         createOrder: function(data, actions) {
             const qty = document.getElementById('orderQty').value;
-            if (!document.getElementById('orderName').value) { alert("Please enter your name"); return actions.reject(); }
+            if (!document.getElementById('orderName').value || !document.getElementById('orderAddress').value) { 
+                alert("Please enter your name and UAE address"); 
+                return actions.reject(); 
+            }
             
             return actions.order.create({
                 purchase_units: [{ 
                     amount: { 
                         currency_code: "USD", 
                         value: (qty * 1.19).toFixed(2) 
-                    } 
-                }]
+                    },
+                    shipping: {
+                        address: {
+                            country_code: "AE"
+                        }
+                    }
+                }],
+                application_context: {
+                    shipping_preference: "SET_PROVIDED_ADDRESS"
+                }
             });
         },
         onApprove: function(data, actions) {
