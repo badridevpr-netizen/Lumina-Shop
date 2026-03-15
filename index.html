@@ -1,250 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumina | Pure Essence Cleaning</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --accent: #00c2ff;
-  --bg: #050505;
-  --panel: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.08);
-  --text-dim: #666;
-}
-
-html { scroll-behavior: smooth; }
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
-
-body {
-  background: var(--bg);
-  color: white;
-  line-height: 1.6;
-  background-image: radial-gradient(circle at 50% -20%, rgba(0, 194, 255, 0.15) 0%, transparent 50%);
-}
-
-header { 
-  padding: 15px 8%; 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  position: fixed; 
-  top: 0; width: 100%; 
-  background: rgba(5, 5, 5, 0.8); 
-  backdrop-filter: blur(15px); 
-  z-index: 1000; 
-  border-bottom: 1px solid var(--border); 
-}
-
-/* Hero Section - Full Height */
-.hero { 
-  height: 100vh; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
-  text-align: center;
-  padding: 0 20px;
-}
-
-.hero h2 { font-size: clamp(40px, 10vw, 80px); line-height: 1.1; letter-spacing: -2px; background: linear-gradient(180deg, #fff 30%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero-divider { width: 100px; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 25px 0; box-shadow: 0 0 10px var(--accent); }
-
-.container { max-width: 1000px; margin: 0 auto; padding: 100px 20px; }
-
-/* Product Grid */
-.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-bottom: 120px; }
-.panel { background: var(--panel); border: 1px solid var(--border); padding: clamp(20px, 5vw, 40px); border-radius: 25px; backdrop-filter: blur(20px); }
-
-input, textarea { 
-  width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
-  border-radius: 12px; padding: 15px; color: white; margin-bottom: 12px; font-size: 16px;
-}
-
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-input[type=number] { -moz-appearance: textfield; }
-
-.qty-control { 
-  display: flex; align-items: center; justify-content: space-between; 
-  background: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 12px; 
-  margin-bottom: 20px; border: 1px solid var(--border); 
-}
-.qty-btn { color: var(--accent); font-size: 22px; cursor: pointer; padding: 0 10px; user-select: none; font-weight: 600; }
-
-.buy-btn { 
-  width: 100%; padding: 18px; background: #fff; color: #000; border: none; 
-  border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; 
-}
-.buy-btn:hover { background: var(--accent); color: white; transform: translateY(-2px); }
-
-/* Review Styling */
-.review-section { margin-top: 80px; text-align: center; }
-.review-card { background: var(--panel); border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 20px; text-align: left; }
-.star-input span { font-size: 30px; cursor: pointer; color: #1a1a1a; transition: 0.2s; }
-.star-input span.active { color: var(--accent); }
-
-@media (max-width: 850px) {
-  .product-grid { grid-template-columns: 1fr; text-align: center; }
-  .hero h2 { font-size: 55px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Lumina | Professional Cleaner</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARQvAzTxllHUAOMlpowp-0ODStK4ZdGqFCEHl88kjcJ-KfYC8jELT1DXjEb9pxYrzaXTPi755zDXX5LH&currency=USD&components=buttons"></script>
+    
+    <style>
+        :root { --primary: #2c3e50; --accent: #27ae60; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; }
+        h1 { color: var(--primary); margin-bottom: 5px; font-size: 28px; letter-spacing: 1px; }
+        .slogan { color: #95a5a6; font-style: italic; margin-bottom: 25px; font-size: 14px; }
+        .price-box { background: #e8f6ef; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
+        .price { font-size: 22px; font-weight: bold; color: var(--accent); }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 16px; outline: none; transition: border 0.3s; }
+        input:focus { border-color: var(--accent); }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: 600; color: var(--primary); font-size: 14px; }
+        #paypal-button-container { margin-top: 10px; min-height: 150px; }
+        .secure-notice { font-size: 11px; color: #bdc3c7; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>LUMINA</h1>
-  <a href="#product" style="padding: 8px 20px; background: var(--accent); color: #000; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 12px;">Order Now</a>
-</header>
-
-<section class="hero">
-    <h2>Purely <br> Essential.</h2>
-    <div class="hero-divider"></div>
-    <p style="color: var(--text-dim);">Modern cleaning science meets 100% natural ingredients.</p>
-</section>
-
-<div class="container" id="product">
-  <section class="product-grid">
-    <div>
-      <h3 style="font-size: clamp(32px, 5vw, 45px); margin-bottom: 20px;">Lumina <br>Multi-Surface</h3>
-      <p style="color: var(--text-dim); margin-bottom: 30px;">Streak-free clarity for every surface. Safe for family and pets.</p>
-      <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-          <div style="background: var(--panel); padding: 10px 20px; border-radius: 15px; border: 1px solid var(--border);">
-            <p style="font-weight:600; font-size: 13px;">Dubai Based</p>
-          </div>
-          <div style="background: var(--panel); padding: 10px 20px; border-radius: 15px; border: 1px solid var(--border);">
-            <p style="font-weight:600; font-size: 13px;">Natural Formula</p>
-          </div>
-      </div>
+<div class="card">
+    <h1>LUMINA</h1>
+    <div class="slogan">A Magician Never Reveals Their Secret</div>
+    
+    <div class="price-box">
+        <span class="price">4 AED Per Bottle</span>
     </div>
 
-    <div class="panel">
-      <div style="font-size: 32px; font-weight: 600; margin-bottom: 20px;">4.00 <span style="font-size:14px; color:var(--text-dim);">AED</span></div>
-      
-      <input type="text" id="orderName" placeholder="Full Name">
-      <input type="text" id="orderAddress" placeholder="Shipping Address">
-      
-      <div class="qty-control">
-        <span style="font-size:13px; color:var(--text-dim);">Quantity</span>
-        <div style="display: flex; align-items: center;">
-          <span class="qty-btn" onclick="changeQty(-1)">−</span>
-          <input type="number" id="orderQty" value="1" readonly style="width: 40px; text-align: center; background: transparent; border: none; color: white; font-size: 18px;">
-          <span class="qty-btn" onclick="changeQty(1)">+</span>
-        </div>
-      </div>
-      
-      <button class="buy-btn" id="mainBuyBtn" onclick="handleOrder()">Complete Purchase</button>
-      <p style="font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 15px;">*Payment converted to USD at checkout via PayPal</p>
-    </div>
-  </section>
+    <label>Full Name</label>
+    <input type="text" id="orderName" placeholder="Enter your name">
 
-  <section class="review-section">
-    <h2 style="font-size: 28px; margin-bottom: 40px;">Customer Reviews</h2>
-    <div id="reviewFeed"><p style="color: var(--text-dim);">Fetching reviews...</p></div>
-  </section>
+    <label>Delivery Address</label>
+    <input type="text" id="orderAddress" placeholder="Dubai / Sharjah address">
 
-  <section class="panel" style="max-width: 600px; margin: 80px auto;">
-    <h3 style="text-align: center; margin-bottom: 20px;">Share Your Experience</h3>
-    <div class="star-input" id="starRating" style="text-align: center; margin-bottom: 15px;">
-      <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
-    </div>
-    <input type="text" id="revName" placeholder="Your Name">
-    <textarea id="revComment" rows="3" placeholder="Tell us what you think of Lumina..."></textarea>
-    <button class="buy-btn" id="revBtn" onclick="submitReview()">Post Review</button>
-  </section>
+    <label>Quantity</label>
+    <select id="orderQty">
+        <option value="1">1 Bottle - 4 AED</option>
+        <option value="2">2 Bottles - 8 AED</option>
+        <option value="4" selected>4 Bottles - 16 AED</option>
+        <option value="10">10 Bottles - 40 AED</option>
+    </select>
+
+    <div id="paypal-button-container"></div>
+    
+    <div class="secure-notice">🛡️ Secure Encrypted Checkout</div>
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzEoHvJXjCRHSpSW-8e1URkOBygXrBS5NAztH4d-TH6Ujh_CTjj5xcFc3aXWq_pRsz_/exec';
-const paypalBase = "https://www.paypal.com/paypalme/LuminaClean/";
+    // Your verified Google Apps Script Link
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlP_f2ls-MIT-RHixtjP0Y0TBLs3tfCw5_QVWjbT8GFiRHmGZY4u0bVmBc6RJQmCpJ/exec';
 
-function changeQty(n) {
-  let q = document.getElementById('orderQty');
-  let v = parseInt(q.value) + n;
-  if(v >= 1) q.value = v;
-}
+    function initPayPal() {
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color:  'gold',
+                shape:  'rect',
+                label:  'paypal' 
+            },
+            createOrder: function(data, actions) {
+                const qty = document.getElementById('orderQty').value;
+                const name = document.getElementById('orderName').value;
+                const addr = document.getElementById('orderAddress').value;
 
-async function handleOrder() {
-  const name = document.getElementById('orderName').value;
-  const address = document.getElementById('orderAddress').value;
-  const qty = document.getElementById('orderQty').value;
-  
-  // Calculations
-  const totalAED = (qty * 4).toFixed(2);
-  const totalUSD = (qty * 1.09).toFixed(2);
+                if (!name || !addr) {
+                    alert("Please enter your name and address first!");
+                    return actions.reject();
+                }
 
-  if(!name || !address) return alert("Please fill shipping details!");
-  
-  const btn = document.getElementById('mainBuyBtn');
-  btn.innerText = "Processing...";
+                // Convert 4 AED to ~1.09 USD for PayPal
+                const totalUSD = (qty * 1.09).toFixed(2);
 
-  try {
-    // Log both currencies to Google Sheets
-    await fetch(scriptURL, { 
-      method: 'POST', 
-      mode: 'no-cors', 
-      body: JSON.stringify({ 
-        type: "order", 
-        name: name, 
-        address: address, 
-        quantity: qty, 
-        total: `${totalAED} AED (${totalUSD} USD)` 
-      }) 
-    });
-    
-    // Redirect to PayPal USD link
-    window.location.href = paypalBase + totalUSD + "usd";
-  } catch(e) { 
-    alert("Error connecting. Please try again."); 
-    btn.innerText = "Complete Purchase";
-  }
-}
+                return actions.order.create({
+                    purchase_units: [{
+                        description: "Lumina Cleaner - " + qty + " Bottle(s)",
+                        amount: {
+                            currency_code: "USD",
+                            value: totalUSD
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    
+                    const orderData = {
+                        type: "order", // Ensures it goes to Sheet1
+                        name: document.getElementById('orderName').value,
+                        address: document.getElementById('orderAddress').value,
+                        quantity: document.getElementById('orderQty').value,
+                        total: (document.getElementById('orderQty').value * 4) + " AED",
+                        payer_email: details.payer.email_address
+                    };
 
-// Review Logic
-let rating = 0;
-const stars = document.querySelectorAll('#starRating span');
-stars.forEach(s => {
-  s.onclick = () => {
-    rating = s.dataset.v;
-    stars.forEach(st => st.classList.toggle('active', st.dataset.v <= rating));
-  };
-});
-
-async function submitReview() {
-  const name = document.getElementById('revName').value;
-  const comm = document.getElementById('revComment').value;
-  if(!name || !comm || !rating) return alert("Please fill all fields!");
-  
-  document.getElementById('revBtn').innerText = "Posting...";
-  await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ type: "review", name, rating, comment: comm }) });
-  alert("Review submitted!");
-  location.reload();
-}
-
-async function loadReviews() {
-  const feed = document.getElementById('reviewFeed');
-  try {
-    const res = await fetch(scriptURL);
-    const data = await res.json();
-    feed.innerHTML = '';
-    if(!data || data.length === 0) {
-      feed.innerHTML = '<p style="color: var(--text-dim);">No reviews yet. Be the first!</p>';
-      return;
+                    // Send to Google Sheets
+                    fetch(scriptURL, { 
+                        method: 'POST', 
+                        mode: 'no-cors', 
+                        body: JSON.stringify(orderData) 
+                    }).then(() => {
+                        alert('Success! Thank you ' + details.payer.name.given_name + '. Your order has been placed.');
+                        window.location.reload();
+                    });
+                });
+            },
+            onError: function(err) {
+                console.error(err);
+                alert("The payment window closed or an error occurred. Please try again.");
+            }
+        }).render('#paypal-button-container');
     }
-    data.reverse().forEach(r => {
-      feed.innerHTML += `
-        <div class="review-card">
-          <div style="color:var(--accent); font-weight:600; display:flex; justify-content:space-between;">
-            <span>${r.name}</span>
-            <span>${'★'.repeat(r.rating)}</span>
-          </div>
-          <p style="font-size:14px; color:#ccc; margin-top:10px;">"${r.comment}"</p>
-        </div>`;
-    });
-  } catch(e) { feed.innerHTML = "Join our community of happy customers."; }
-}
 
-window.onload = loadReviews;
+    initPayPal();
 </script>
+
 </body>
 </html>
