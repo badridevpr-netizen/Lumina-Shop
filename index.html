@@ -10,16 +10,17 @@
         body { background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         .navbar { padding: 30px 50px; display: flex; justify-content: center; }
         .logo { font-size: 28px; font-weight: bold; letter-spacing: 4px; }
+        
         .hero { text-align: center; padding: 60px 20px; }
         .hero h1 { font-size: clamp(50px, 10vw, 90px); margin: 0; font-weight: 800; line-height: 0.9; }
         .hero p { color: #888; font-size: 18px; margin-top: 20px; letter-spacing: 1px; }
+        
         .main-content { display: flex; justify-content: center; gap: 40px; padding: 40px; flex-wrap: wrap; }
         .product-info { max-width: 400px; }
         .product-info h2 { font-size: 40px; margin-bottom: 10px; }
         .tag-container { display: flex; gap: 10px; margin-top: 20px; }
         .tag { border: 1px solid #333; padding: 8px 15px; border-radius: 30px; font-size: 12px; text-transform: uppercase; color: #888; }
         
-        /* Fixed Checkout Card for Card Button */
         .checkout-card { 
             background: #111; 
             padding: 40px; 
@@ -27,7 +28,6 @@
             width: 100%; 
             max-width: 380px; 
             border: 1px solid #222;
-            min-height: 500px; /* Gives space for the card form to expand */
         }
         .price-tag { font-size: 32px; font-weight: bold; margin-bottom: 5px; }
         .price-tag span { font-size: 16px; color: #555; margin-left: 5px; }
@@ -35,12 +35,13 @@
         .live-total-box { color: #27ae60; font-weight: bold; font-size: 18px; margin-bottom: 20px; text-align: left; border-bottom: 1px solid #222; padding-bottom: 10px; }
         
         input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #222; background: #000; color: #fff; font-size: 16px; }
-        #paypal-button-container { margin-top: 15px; width: 100%; min-height: 150px; }
         
-        .divider { border-top: 1px solid #222; margin: 100px 10%; }
+        .divider { border-top: 1px solid #222; margin: 80px 10%; }
         .review-section { padding: 0 20px 100px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .review-card { background: #111; padding: 30px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid #222; }
         .submit-btn { background: #fff; color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        
+        #paypal-button-container { margin-top: 15px; width: 100%; min-height: 150px; }
     </style>
 </head>
 <body>
@@ -113,12 +114,7 @@
     }
 
     paypal.Buttons({
-        style: { 
-            layout: 'vertical', 
-            color: 'gold', 
-            shape: 'rect', 
-            label: 'paypal' 
-        },
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
         createOrder: function(data, actions) {
             const qty = document.getElementById('orderQty').value;
             const name = document.getElementById('orderName').value;
@@ -134,14 +130,8 @@
                     amount: { 
                         currency_code: "USD", 
                         value: (qty * 1.19).toFixed(2) 
-                    },
-                    shipping: {
-                        address: { country_code: "AE" }
                     }
-                }],
-                application_context: {
-                    shipping_preference: "SET_PROVIDED_ADDRESS"
-                }
+                }]
             });
         },
         onApprove: function(data, actions) {
@@ -159,11 +149,6 @@
                 alert('Order Placed Successfully!');
                 window.location.reload();
             });
-        },
-        onError: function(err) {
-            console.error('PayPal Error:', err);
-            // If it still doesn't open, this alert will tell us why
-            alert("Payment could not start. Please ensure you are in the UAE and try a different browser.");
         }
     }).render('#paypal-button-container');
 
