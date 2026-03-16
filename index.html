@@ -25,7 +25,18 @@
         .live-total-box { color: #27ae60; font-weight: bold; font-size: 18px; margin-bottom: 20px; text-align: left; border-bottom: 1px solid #222; padding-bottom: 10px; }
         
         input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #222; background: #000; color: #fff; font-size: 16px; }
-        #paypal-button-container { margin-top: 15px; min-height: 150px; }
+        .divider { border-top: 1px solid #222; margin: 80px 10%; }
+        
+        /* Review Styling */
+        .review-section { padding: 0 20px 100px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .review-card { background: #111; padding: 30px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid #222; margin-bottom: 40px; }
+        .submit-btn { background: #fff; color: #000; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        
+        #reviews-display { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+        .user-review { background: #0a0a0a; border-left: 4px solid #fff; padding: 20px; text-align: left; border-radius: 10px; }
+        .user-review b { display: block; margin-bottom: 5px; color: #fff; }
+        .user-review span { color: gold; font-size: 14px; }
+        .user-review p { color: #bbb; margin: 10px 0 0 0; font-style: italic; }
     </style>
 </head>
 <body>
@@ -50,23 +61,37 @@
         <div class="checkout-card">
             <div class="price-tag">4.37 <span>AED</span></div>
             <p style="color:#555; font-size:12px; margin-bottom:20px;">Unit Price (Excl. Fees)</p>
-            
             <input type="text" id="orderName" placeholder="Full Name">
             <input type="text" id="orderAddress" placeholder="Delivery Address (UAE Only)">
-            
-            <label style="display:block; text-align:left; font-size:12px; color:#888; margin-bottom:5px;">Select Quantity</label>
             <select id="orderQty" onchange="updateTotal()">
                 <option value="1" selected>1 Bottle</option>
                 <option value="2">2 Bottles</option>
                 <option value="4">4 Bottles</option>
                 <option value="10">10 Bottles</option>
             </select>
-
-            <div class="live-total-box">
-                Total: <span id="displayTotal">4.37</span> AED
-            </div>
-
+            <div class="live-total-box">Total: <span id="displayTotal">4.37</span> AED</div>
             <div id="paypal-button-container"></div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="review-section">
+        <h3>Share Your Experience</h3>
+        <div class="review-card">
+            <input type="text" id="revName" placeholder="Your Name">
+            <select id="revRating">
+                <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                <option value="4">⭐⭐⭐⭐ (Good)</option>
+                <option value="3">⭐⭐⭐ (Average)</option>
+            </select>
+            <textarea id="revComment" rows="3" placeholder="Tell us what you think..."></textarea>
+            <button class="submit-btn" onclick="submitReview()">POST REVIEW</button>
+        </div>
+
+        <h3>Recent Reviews</h3>
+        <div id="reviews-display">
+            <p style="color: #444;">Loading community feedback...</p>
         </div>
     </div>
 
@@ -78,27 +103,33 @@
         document.getElementById('displayTotal').innerText = (qty * 4.37).toFixed(2);
     }
 
+    // Load reviews on page load
+    window.onload = function() {
+        fetch(scriptURL + "?action=getReviews")
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('reviews-display');
+            container.innerHTML = "";
+            data.forEach(rev => {
+                container.innerHTML += `
+                    <div class="user-review">
+                        <b>${rev.name}</b>
+                        <span>${"⭐".repeat(rev.rating)}</span>
+                        <p>"${rev.comment}"</p>
+                    </div>`;
+            });
+        });
+    };
+
     paypal.Buttons({
-        style: { 
-            layout: 'vertical', 
-            color: 'gold', 
-            shape: 'rect', 
-            label: 'checkout' 
-        },
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'checkout' },
         createOrder: function(data, actions) {
             const qty = document.getElementById('orderQty').value;
-            if (!document.getElementById('orderName').value || !document.getElementById('orderAddress').value) { 
-                alert("Please enter your name and UAE address"); 
-                return actions.reject(); 
+            if (!document.getElementById('orderName').value || !document.getElementById('orderAddress').value) {
+                alert("Please enter your details!"); return actions.reject();
             }
-            
             return actions.order.create({
-                purchase_units: [{ 
-                    amount: { 
-                        currency_code: "USD", 
-                        value: (qty * 1.19).toFixed(2) 
-                    }
-                }]
+                purchase_units: [{ amount: { currency_code: "USD", value: (qty * 1.19).toFixed(2) } }]
             });
         },
         onApprove: function(data, actions) {
@@ -112,12 +143,30 @@
                     payer_email: details.payer.email_address
                 };
                 fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
-                alert('Order Placed Successfully!');
+                alert('Order Placed! Check your email.');
                 window.location.reload();
             });
         }
     }).render('#paypal-button-container');
-</script>
 
+    function submitReview() {
+        const name = document.getElementById('revName').value;
+        const comment = document.getElementById('revComment').value;
+        if(!name || !comment) { alert("Please fill in all fields!"); return; }
+        
+        const revData = {
+            type: "review",
+            name: name,
+            rating: document.getElementById('revRating').value,
+            comment: comment
+        };
+
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(revData) })
+        .then(() => {
+            alert("Review submitted! It will appear shortly.");
+            window.location.reload();
+        });
+    }
+</script>
 </body>
 </html>
